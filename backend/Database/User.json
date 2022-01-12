@@ -1,0 +1,11 @@
+{
+    "_id": ObjectId("61d7af0a70710000f9005d24"),
+    "email": "anon_de@saijo-denki.co.th",
+    "password": "wpx7g4bvwr",
+    "full_name": "Anon Dechpala",
+    "company_id": ObjectId("61d7add670710000f9005d23"),
+    "role_id": "2",
+    "status": true,
+    "created_date": "2022-01-06T09:20:02+07:00",
+    "updated_date": "2022-01-06T09:20:02+07:00"
+}

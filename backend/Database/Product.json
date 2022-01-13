@@ -1,0 +1,21 @@
+{
+    "_id": ObjectId("61d803e370710000f9005d2b"),
+
+    "title": "Indoor 2",
+    "type": "AC",
+    "model":"SM213",
+    "serail_no":"365F0121245627",
+    "gateway_sn": "283B96C3015B",
+    "uid": "X2.805",
+    "cid": "L2_805",
+    "odu":"X2.800",
+    "location":{
+        "building":"www",
+        "floor":"www",
+        "room":"ww"
+    },
+    "company_id":ObjectId("61d7add670710000f9005d23"),
+    "enable":true,
+    "register_date": ISODate("2022-01-07T09:12:03.877Z"),
+    "updated_dated": ISODate("2022-01-07T09:12:03.877Z")
+}

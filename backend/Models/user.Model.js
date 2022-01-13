@@ -79,4 +79,41 @@ export default class UserModel {
       console.log(`${e}`);
     }
   }
+
+
+  static async postUserRegister(userInfo){  
+
+    try {
+
+      const userData = {
+        email:userInfo.email,
+        password:userInfo.password,
+        full_name:userInfo.full_name,
+        company_id:ObjectId(userInfo.company_id),
+        role_id:userInfo.role_id,
+        status:userInfo.status,
+        created_date:userInfo.created_date,
+        updated_date:userInfo.updated_date
+      }
+
+      
+
+      const response = await users.insertOne(userData)
+
+      return response      
+    } catch (error) {
+
+      return false
+      
+    }
+
+
+  }
+
+
+
+
+
+
+
 } // end of class

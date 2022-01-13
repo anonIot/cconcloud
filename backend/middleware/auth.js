@@ -22,6 +22,8 @@ const verifyToken = (req,res,next)=>{
 
         req.user = decode
 
+        // document.cookie = `token${decode}`
+
 
     } catch (error) {
         return res.status(401).send("Invalid Token");

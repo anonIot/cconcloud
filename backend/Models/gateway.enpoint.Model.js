@@ -2,6 +2,9 @@ import moment from "moment";
 import mongodb from "mongodb";
 
 let gateways;
+let gatewaysRealm
+
+
 export default class GatewayEndPoint {
   static async injectDB(conn) {
     if (gateways) {
@@ -10,6 +13,7 @@ export default class GatewayEndPoint {
 
     try {
       gateways = conn.db(process.env.SRV_DB_NS).collection("gatewaylogs");
+      gatewaysRealm = conn.db(process.env.SRV_DB_NS).collection("gatewayreal");
     } catch (e) {
       console.log(`Error Handle ${e}`);
     }
@@ -31,41 +35,24 @@ export default class GatewayEndPoint {
 
       return false;
 
-      /*
-
-            if(Array.isArray(gatewayInfo)){
-                if(typeof(gatewayInfo)==="array"){
-                    const response = await gateways.insertMany(gatewayInfo)
-    
-                    return response
-                }
-            } else if(!Array.isArray(gatewayInfo)){
-
-                const response = await gateways.insertOne(gatewayInfo)
-                return response
-
-            }
-
-            */
     } catch (e) {
       console.log(`Error Documents ${e}`);
     }
   }
 
-  static async upsertGateway(dataInfo, date, device_no) {
+  static async upsertGateway(filter,dataInfo) {
     try {
-      const gatewayInfo = {
-        device_no: dataInfo.device_no,
-        data_istat: dataInfo.data,
-        updated_date: date,
-      };
+      // const gatewayInfo = {
+      //   device_no: dataInfo.device_sn,
+      //   unit_id: dataInfo.unit_id,
+      //   updated_date: new Date(),
+      // };
 
-      const response = await gateways.update(
-        { device_no: device_no },
-        gatewayInfo
+      const response = await gatewaysRealm.updateMany(filter,dataInfo, { upsert: true }
+      
       );
 
-      return response;
+      return (response);
     } catch (e) {
       console.log(`Error Documents ${e}`);
     }

@@ -80,40 +80,24 @@ export default class UserModel {
     }
   }
 
-
-  static async postUserRegister(userInfo){  
-
+  static async postUserRegister(userInfo) {
     try {
-
       const userData = {
-        email:userInfo.email,
-        password:userInfo.password,
-        full_name:userInfo.full_name,
-        company_id:ObjectId(userInfo.company_id),
-        role_id:userInfo.role_id,
-        status:userInfo.status,
-        created_date:userInfo.created_date,
-        updated_date:userInfo.updated_date
-      }
+        email: userInfo.email,
+        password: userInfo.password,
+        full_name: userInfo.full_name,
+        company_id: userInfo.company_id,
+        role_id: userInfo.role_id,
+        status: userInfo.status,
+        created_date: userInfo.created_date || new Date(),
+        updated_date: userInfo.updated_date || new Date(),
+      };
 
-      
+      const response = await users.insertOne(userData);
 
-      const response = await users.insertOne(userData)
-
-      return response      
+      return response;
     } catch (error) {
-
-      return false
-      
+      return false;
     }
-
-
-  }
-
-
-
-
-
-
-
+  } // end of postUserRegister func
 } // end of class

@@ -25,17 +25,82 @@ MongoClient.connect(process.env.SRV_DB_SERVER_URI, {
     await gatewayModel.injectDB(client);
 
     setInterval(async () => {
-      await gatewayEndPoint();
+    //   await gatewayEndPoint();
+
+      await gatewayList();
     }, 4000);
   });
 
-const gatewayEndPoint = async () => {
+const gatewayList = async () => {
+  const company_id = "61d50d3d5341dc9f7163eccf";
+  const response = await gatewayModel.gatewayListByCompanyId(company_id);
+
+  let gatewayAll = [];
+
+
+
+try {
+
+    response.forEach( async (item) => {
+        // let infoGw = {
+        //   url: `http://${item.ip}:10103/v2.0/device/${item.device_sn}`,
+        //   device_sn: item.device_sn,
+        // };
+
+
+        let url= `http://${item.ip}:10103/v2.0/device/${item.device_sn}`;
+        let device_sn = item.device_sn;
+    
+        // gatewayAll.push(infoGw);
+       
+        
+            await gatewayEndPoint(url,device_sn)
+
+
+
+      });
+    
+    //   console.log(gatewayAll);
+
+      return gatewayAll
+    
+} catch (error) {
+    return false
+}
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+};
+
+const gatewayEndPoint = async (gwurl,gwsn) => {
+
   try {
-    const url = "http://192.168.11.88:10103/v2.0/device/283B96C3015B";
-    const device_sn = "283B96C3015B";
+  
 
-    const data = await endpoint(url);
+    // const url = "http://192.168.11.88:10103/v2.0/device/283B96C3015B";
 
+    // const device_sn = "283B96C3015B";
+
+    let url = gwurl
+    let device_sn = gwsn
+
+    const data = await endpoint(url);    
+    
+    
+    
+    
+    
     if (data.rc === "OK") {
       const acInfo = data.data;
 
@@ -101,8 +166,6 @@ const gatewayEndPoint = async () => {
 
       console.log(gatewayRealm);
     }
-
-    
   } catch (e) {
     console.log(`Error is ${e}`);
   }
@@ -136,4 +199,3 @@ const endpoint = async (url) => {
     console.log(`Handle error ${e.message}`);
   }
 };
-

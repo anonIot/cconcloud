@@ -1,8 +1,9 @@
 import moment from "moment";
-import mongodb from "mongodb";
+import mongodb, { ObjectId } from "mongodb";
 
 let gateways;
 let gatewaysRealm
+let gateway;
 
 
 export default class GatewayEndPoint {
@@ -13,6 +14,7 @@ export default class GatewayEndPoint {
 
     try {
       gateways = conn.db(process.env.SRV_DB_NS).collection("gatewaylogs");
+      gateway = conn.db(process.env.SRV_db_NS).collection("gateway");
       gatewaysRealm = conn.db(process.env.SRV_DB_NS).collection("gatewayreal");
     } catch (e) {
       console.log(`Error Handle ${e}`);
@@ -57,4 +59,31 @@ export default class GatewayEndPoint {
       console.log(`Error Documents ${e}`);
     }
   }
+
+
+  static async gatewayListByCompanyId(company_id=null){
+
+    let query = {
+        customer_id:ObjectId(company_id)
+    } 
+
+
+    try {
+
+      const response = await gateway.find(query).toArray()
+
+      return response;
+
+      
+    } catch (e) {
+      console.log(`Error Documents ${e}`);
+      return
+    }
+
+
+  }
+
+
+
+
 } // end of class

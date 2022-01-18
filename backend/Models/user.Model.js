@@ -1,5 +1,6 @@
 import mongodb from "mongodb";
 import moment from "moment";
+import { Router } from "express";
 
 const ObjectId = mongodb.ObjectId;
 
@@ -51,6 +52,50 @@ export default class UserModel {
       return { userList: [], totalUser: 0 };
     }
   } // end of getUsers
+
+
+  static async getUserInfo(user_id=null){
+
+     let query = []
+
+     if(user_id){
+       query = [{$match:{_id:ObjectId(user_id)}},{$lookup:{
+         from:"company",
+         localField:"company_id",
+         foreignField:"_id",
+         as:"company_info"
+       }},{$project:{password:0}}]
+     }
+
+     try {
+
+      let userInfo = []
+
+    if(query.length > 0){
+
+      console.log(query.length)
+      
+      userInfo = await users.aggregate(query).toArray()
+
+      
+
+    }
+
+
+    return userInfo
+      
+
+
+     } catch (error) {
+       console.log(error)
+       return false
+     }
+
+
+
+
+
+  }
 
   static async getUserByEmail({ email = null }) {
     let query;

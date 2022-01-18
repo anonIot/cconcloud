@@ -62,4 +62,6 @@ const Router = express.Router();
 
 Router.route("/").get(UserCtrl.apiGetUsers);
 
+Router.route("/info").get(UserCtrl.apiGetUserInfo)
+
 export default Router;

@@ -50,10 +50,7 @@ export default class AuthController {
         );
 
         response = {
-          Info: userInfo,
-          totalUser: total,
-          password: password,
-          hashPasword: await bcrypt.compare(password, userInfo.password),
+          email: email,         
           token: token,
         };
       } else {

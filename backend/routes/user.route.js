@@ -1,6 +1,6 @@
 import express from "express";
 import UserCtrl from "../Controllers/user.Controller.js";
-
+import UserPermis from "../middleware/permission.js"
 /**
  * @swagger
  * components:
@@ -63,5 +63,15 @@ const Router = express.Router();
 Router.route("/").get(UserCtrl.apiGetUsers);
 
 Router.route("/info").get(UserCtrl.apiGetUserInfo)
+
+Router.route("/permis").get(UserPermis,(req,res,next)=>{
+
+
+    let userPer = req.user.user_id
+
+    res.send("The permis "+ userPer)
+
+    
+})
 
 export default Router;

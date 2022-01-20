@@ -37,9 +37,16 @@ import productRouter from "./routes/product.route.js"
 
 const app = express()
 
-app.use((cors()))
+
+const optionsCors = {
+
+}
+app.use(cors())
+app.options('*', cors())
+
 app.use(express.json())
 
+// app.use(express.static("public"))
 
 app.use("/api/v2.0/gateway",gatewayRouter)
 app.use("/api/v2.0/users",auth,userRouter)
@@ -56,7 +63,12 @@ app.use("/api/v2.0/product",productRouter)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(space));
 
 // Set default Route
-app.use("*",(req,res)=> res.status(400).json({error:"not found"}))
+// app.use("*",(req,res)=> res.status(400).json({error:"not found"}))
+
+app.use("/",(req,res)=>{
+    res.send({response:"i am alive"}).status(200)
+})
+
 
 
 export default app

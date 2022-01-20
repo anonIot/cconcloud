@@ -73,7 +73,7 @@ export default class UserModel {
 
     if(query.length > 0){
 
-      console.log(query.length)
+     
       
       userInfo = await users.aggregate(query).toArray()
 

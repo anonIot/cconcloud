@@ -45,6 +45,8 @@ app.use(cors())
 app.options('*', cors())
 
 app.use(express.json())
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
 
 // app.use(express.static("public"))
 
@@ -57,8 +59,6 @@ app.use("/api/v2.0/welcome",auth,(req,res)=>{
     res.json(data)
 })
 app.use("/api/v2.0/product",productRouter)
-
-
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(space));
 

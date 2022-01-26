@@ -3,6 +3,7 @@ import dotenv from  "dotenv"
 import mongodb from "mongodb"
 import users from "./Models/user.Model.js"
 import products from "./Models/product.Model.js"
+import jwt from "jsonwebtoken"
 
 import { Server } from "socket.io";
 import http from "http"
@@ -16,11 +17,28 @@ const io = new Server(server,{
 
 
 
+
+
 dotenv.config()
 
 const port = process.env.PORT 
 
 const MongoClient = mongodb.MongoClient
+
+
+
+
+io.use((socket,next)=>{
+
+  const token = socket.handshake.query.token
+  
+  const decode = jwt.verify(token,process.env.SECRET_CODE)
+  
+  socket.userId = decode.user_id
+  
+  next()
+  
+  })
 
 
 
@@ -50,7 +68,7 @@ console.log(productList)
 
 // Express + Socket io
 io.on('connection',(socket)=>{
-  console.log("a user connected")
+  console.log("a user connected userID "+ socket.userId)
 
   socket.on('disconnect', () => {
       console.log('user disconnected');
@@ -65,7 +83,7 @@ io.on('connection',(socket)=>{
 
 
       
-      socket.emit("welcome", JSON.stringify(responseInfo));
+      socket.emit("283B96C3015B/L2-803", JSON.stringify(responseInfo));
     },4000)
 
 

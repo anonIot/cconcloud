@@ -3,6 +3,11 @@ import dotenv from  "dotenv"
 import mongodb from "mongodb"
 import users from "./Models/user.Model.js"
 import products from "./Models/product.Model.js"
+import building from "./Models/building.Model.js"
+
+
+
+
 import jwt from "jsonwebtoken"
 
 import { Server } from "socket.io";
@@ -52,6 +57,7 @@ MongoClient.connect(process.env.SRV_DB_SERVER_URI,{
 }).then(async client =>{
     await users.injectDB(client)
     await products.injectDB(client)
+    await building.injectDB(client)
 
     let device =  "283B96C3015B"
     let uid = "X2.803"

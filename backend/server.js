@@ -1,5 +1,6 @@
 import express from "express"
 import cors from "cors"
+import multer from "multer"
 import auth from "./middleware/auth.js"
 
 //Swagger
@@ -34,6 +35,8 @@ import gatewayRouter from "./routes/gateway.route.js"
 import userRouter from "./routes/user.route.js"
 import authRouter from "./routes/auth.route.js"
 import productRouter from "./routes/product.route.js"
+import buildingRouter from "./routes/building.route.js"
+import uploadImgRouter from "./routes/upload.route.js";
 
 const app = express()
 
@@ -53,12 +56,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/v2.0/gateway",gatewayRouter)
 app.use("/api/v2.0/users",auth,userRouter)
 app.use("/api/v2.0/auth",authRouter)
+app.use("/api/v2.0/building",auth,buildingRouter)
 app.use("/api/v2.0/welcome",auth,(req,res)=>{
     let data = req.user
     let Users = req.userInfo
     res.json(data)
 })
 app.use("/api/v2.0/product",productRouter)
+
+app.use("/api/v2.0/upload-image",uploadImgRouter)
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(space));
 
@@ -68,6 +74,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(space));
 app.use("/",(req,res)=>{
     res.send({response:"i am alive"}).status(200)
 })
+
+
+
 
 
 

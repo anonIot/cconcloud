@@ -44,6 +44,7 @@ export default class AuthController {
             user_id: userInfo._id,
             email,
             role: userInfo.role_id,
+            companyId:userInfo.company_id
           },
           process.env.SECRET_CODE,
           { expiresIn: "2h" }
